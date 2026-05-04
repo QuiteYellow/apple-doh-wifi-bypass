@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+
+    <!-- Global DoH DNS configuration with OnDemandRules -->
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.dnsSettings.managed</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>YOUR_REVERSE_DOMAIN.globaldns.doh</string>
+      <key>PayloadUUID</key>
+      <string>YOUR_UUID_1</string>
+      <key>PayloadDisplayName</key>
+      <string>Global DoH DNS</string>
+
+      <key>DNSSettings</key>
+      <dict>
+        <key>DNSProtocol</key>
+        <string>HTTPS</string>
+        <key>ServerURL</key>
+        <string>YOUR_DOH_SERVER_URL</string>
+      </dict>
+
+      <!-- OnDemandRules to disable DoH on specific Wi-Fi -->
+      <key>OnDemandEnabled</key>
+      <integer>1</integer>
+      <key>OnDemandRules</key>
+      <array>
+        <!-- Disable DoH when on trusted Wi-Fi -->
+        <dict>
+          <key>InterfaceTypeMatch</key>
+          <string>WiFi</string>
+          <key>SSIDMatch</key>
+          <array>
+            <string>YOUR_HOME_SSID</string>
+          </array>
+          <key>Action</key>
+          <string>Disconnect</string>
+        </dict>
+
+        <!-- Enable DoH on other Wi-Fi networks -->
+        <dict>
+          <key>InterfaceTypeMatch</key>
+          <string>WiFi</string>
+          <key>Action</key>
+          <string>Connect</string>
+        </dict>
+
+        <!-- Enable DoH on Cellular -->
+        <dict>
+          <key>InterfaceTypeMatch</key>
+          <string>Cellular</string>
+          <key>Action</key>
+          <string>Connect</string>
+        </dict>
+
+        <!-- Catch-all: disable DoH -->
+        <dict>
+          <key>Action</key>
+          <string>Disconnect</string>
+        </dict>
+      </array>
+    </dict>
+
+  </array>
+
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadIdentifier</key>
+  <string>YOUR_REVERSE_DOMAIN.profile</string>
+  <key>PayloadUUID</key>
+  <string>YOUR_UUID_2</string>
+  <key>PayloadDisplayName</key>
+  <string>DNS Profile (Global DoH with Wi-Fi Bypass)</string>
+</dict>
+</plist>
